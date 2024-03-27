@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// PROTOTYPES OF FUNCTIONS
 void createDynamicArray(int *array, int *size);
 void displayDynamicArray(int *array, int size);
 void insertElement(int *array, int *size);
@@ -25,7 +26,7 @@ int main() {
         printf("\n\n Enter your choice: ");
         scanf("%d", &option);
 
-        switch (option) {
+        switch (option) {                            // USING SWITCH CASE FOR MENU DRIVEN PROGRAMS
             case 1:
                 createDynamicArray(array, &size);
                 break;
