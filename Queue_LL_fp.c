@@ -1,5 +1,8 @@
 //c program for implementation of queue in Linked list using functions and pointers
 
+// Agar aapko linked list or array ke operations acchi tarah se aate hai then stack and queue me koi issue nhi hoga 
+// reason that inke codes bhi ll/ array ki tarah kerne hai but  jo FIFO & LIFO waala fundaa apply kerke thoda sa modification kerni hai code me
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -20,6 +23,7 @@ void peekQueue();
 int main() {
     int choice;
     do {
+        printf("\n MENU FOR OPERATION ON QUEUE IN ll");
         printf("\n1. Insert the element in the Queue.\n");
         printf("2. Display\n");
         printf("3. Delete the element from Queue\n");
@@ -53,7 +57,7 @@ int main() {
                 break;
             }
             case 5: {
-                printf("THANKYOU FOR USING");
+                printf("OR BHAI AA GYE SAWAAD DSA KE");
                 break;
             }
         }
