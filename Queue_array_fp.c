@@ -49,7 +49,7 @@ int main() {
                 break;
             }
             case 5: {
-                printf("THANK YOU FOR USING\n");
+                printf("THANK YOU FOR USING(Zaada mat soch, bor ho gya hu tughe DSA ki nasihayat de deke)\n");
                 break;
             }
         }
