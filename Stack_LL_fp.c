@@ -61,7 +61,7 @@ int main() {
                 break;
             }
             case 5: {
-                printf("THANK YOU FOR USING\n");
+                printf("hmm bhadiya execute hua hai tera code. V. K ka khoof kuch kaam to aaya\n");
                 break;
             }
         }
