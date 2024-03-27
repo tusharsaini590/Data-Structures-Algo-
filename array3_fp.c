@@ -36,7 +36,7 @@ int main() {
     scanf("%d", &size);
 
     // Dynamically allocate memory for the array
-    int* newarray = (int*)malloc(size * sizeof(int));
+    int* newarray = (int*)malloc(size * sizeof(int)); // MALLOC FOR MEMORY ALLOCATION ; ITS OUTPUT IS TYPECASTED INTO INT DATA TYPE
     if (newarray == NULL) {
         printf("Memory allocation failed. Exiting...\n");
         return 1;
