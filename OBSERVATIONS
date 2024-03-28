@@ -1,0 +1,9 @@
+Here are the Observation which i noted while making all the codes in this repository
+lot to do 
+collaboration in observations is invited
+
+1) Removing ";" after declaring a variable of certain data type
+                - error: expected ';' before '_data_type_'
+                -
+2) Changing the names of predefind built in functions like printf,scanf.
+                 - warning: implicit declaration of function 'Printf'; did you mean 'printf'? [-Wimplicit-function-declaration]
