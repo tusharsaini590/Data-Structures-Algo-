@@ -1,2 +1,180 @@
 // Program to perform insertion, deletion, create, display operations in single linked list 
 // using functions 
+// it is just a try to make such type of program
+
+#include <stdio.h>
+#define MAX_SIZE 1000
+
+typedef struct Node {
+    int data[MAX_SIZE];
+    int size;
+} Node;
+
+void insertatbeginning(Node* list, int num) {
+    if (list->size < MAX_SIZE) {
+        for (int i = list->size; i > 0; --i) {
+            list->data[i] = list->data[i - 1];
+        }
+        list->data[0] = num;
+        list->size++;
+    } else {
+        printf("List is full. Cannot insert more elements.\n");
+    }
+}
+
+void insertatend(Node* list, int num) {
+    if (list->size < MAX_SIZE) {
+        list->data[list->size] = num;
+        list->size++;
+    } else {
+        printf("List is full. Cannot insert more elements.\n");
+    }
+}
+
+void insertatlocation(Node* list, int num, int location) {
+    if (list->size < MAX_SIZE && location >= 0 && location < list->size) {
+        for (int i = list->size; i > location; --i) {
+            list->data[i] = list->data[i - 1];
+        }
+        list->data[location] = num;
+        list->size++;
+    } else {
+        printf("Invalid location or list is full. Cannot insert more elements.\n");
+    }
+}
+
+void deletefrombeginning(Node* list) {
+    if (list->size > 0) {
+        for (int i = 0; i < list->size - 1; i++) {
+            list->data[i] = list->data[i + 1];
+        }
+        list->size--;
+    } else {
+        printf("List is empty. Cannot delete elements.\n");
+    }
+}
+
+void deletefromend(Node* list) {
+    if (list->size > 0) {
+        list->size--;
+    } else {
+        printf("List is empty. Cannot delete elements.\n");
+    }
+}
+
+void deletefromlocation(Node* list, int location) {
+    if (list->size > 0 && location >= 0 && location < list->size) {
+        for (int i = location; i < list->size - 1; i++) {
+            list->data[i] = list->data[i + 1];
+        }
+        list->size--;
+    } else {
+        printf("Invalid location or list is empty. Cannot delete elements.\n");
+    }
+}
+
+void displaylist(Node list) {
+    if (list.size == 0) {
+        printf("Linked list is empty.\n");
+        return;
+    }
+    printf("Linked List: ");
+    for (int i = 0; i < list.size; i++) {
+        printf("%d -> ", list.data[i]);
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    Node list = {.size = 0};
+    int option, num, location;
+
+    do {
+        printf("\n\n\t\t----------MAIN MENU----------"
+               "\n 1:) Create a List"
+               "\n 2:) Display the List"
+               "\n 3:) Insert a node in the List"
+               "\n 4:) Delete a node from the List"
+               "\n 5:) Exit the program"
+               "\n\n Enter your choice: ");
+        if (scanf("%d", &option) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            while (getchar() != '\n'); // clear the input buffer
+            continue;
+        }
+
+        switch(option) {
+            case 1:
+                printf("\n Type data to create a list (enter -1 to end):\n ");
+                while (scanf("%d", &num) == 1 && num != -1) {
+                    if (list.size < MAX_SIZE) {
+                        insertatend(&list, num);
+                        printf(" Enter more data (enter -1 to end): ");
+                    } else {
+                        printf("List is full. Cannot insert more elements.\n");
+                        break;
+                    }
+                }
+                while (getchar() != '\n'); // clear the buffer
+                break;
+            case 2:
+                displaylist(list);
+                break;
+            case 3:
+                printf("\n Enter a number to insert in the list: ");
+                if (scanf("%d", &num) != 1) {
+                    printf("Invalid input. Please enter a number.\n");
+                    while (getchar() != '\n'); // clear the buffer
+                    continue;
+                }
+                printf("\n Where do you want to insert the number? (1: Beginning, 2: End, 3: Specific Location): ");
+                if (scanf("%d", &location) != 1 || location < 1 || location > 3) {
+                    printf("Invalid choice. Please enter 1, 2, or 3.\n");
+                    while (getchar() != '\n'); // clear the buffer
+                    continue;
+                }
+                if (location == 1) {
+                    insertatbeginning(&list, num);
+                } else if (location == 2) {
+                    insertatend(&list, num);
+                } else {
+                    printf("\n Enter the specific location (0 to %d): ", list.size);
+                    if (scanf("%d", &location) != 1 || location < 0 || location > list.size) {
+                        printf("Invalid location.\n");
+                        while (getchar() != '\n'); // clear the buffer
+                        continue;
+                    }
+                    insertatlocation(&list, num, location);
+                }
+                break;
+            case 4:
+                printf("\n Where do you want to delete a number? (1: Beginning, 2: End, 3: Specific Location): ");
+                if (scanf("%d", &location) != 1 || location < 1 || location > 3) {
+                    printf("Invalid choice. Please enter 1, 2, or 3.\n");
+                    while (getchar() != '\n'); // clear the buffer
+                    continue;
+                }
+                if (location == 1) {
+                    deletefrombeginning(&list);
+                } else if (location == 2) {
+                    deletefromend(&list);
+                } else {
+                    printf("\n Enter the specific location to delete (0 to %d): ", list.size - 1);
+                    if (scanf("%d", &location) != 1 || location < 0 || location >= list.size) {
+                        printf("Invalid location.\n");
+                        while (getchar() != '\n'); // clear the buffer
+                        continue;
+                    }
+                    deletefromlocation(&list, location);
+                }
+                break;
+            case 5:
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while(option != 5);
+
+    return 0;
+}
