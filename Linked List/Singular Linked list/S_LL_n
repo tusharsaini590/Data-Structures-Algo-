@@ -1,2 +1,158 @@
 // Program to perform insertion, deletion, create, display operations in single linked list 
 // without functions and pointers
+// it is just a try to make such type of code, here the code acts like a linked list but not exactly a linked list
+
+#include <stdio.h>
+#define MAX_SIZE 1000
+
+typedef struct Node {
+    int data[MAX_SIZE];
+    int size;
+} Node;
+
+void clear_input_buffer() {
+    while (getchar() != '\n');
+}
+
+int main() {
+    Node list = {.size = 0};
+    int option, num, location;
+
+    do {
+        printf("\n\n\t\t----------MAIN MENU----------"
+               "\n 1:) Create a List"
+               "\n 2:) Display the List"
+               "\n 3:) Insert a node in the List"
+               "\n 4:) Delete a node from the List"
+               "\n 5:) Exit the program"
+               "\n\n Enter your choice: ");
+
+        if (scanf("%d", &option) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            clear_input_buffer();
+            continue;
+        }
+
+        if (option < 1 || option > 5) {
+            printf("Invalid choice. Please try again.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        switch(option) {
+            case 1: {
+                if (list.size >= MAX_SIZE) {
+                    printf("List is already full.\n");
+                    break;
+                }
+                printf("\n Type data to create a list (enter -1 to end):\n ");
+                while (scanf("%d", &num) == 1 && num != -1 && list.size < MAX_SIZE) {
+                    list.data[list.size++] = num;
+                    if (list.size < MAX_SIZE) {
+                        printf(" Enter more data (enter -1 to end): ");
+                    }
+                }
+                clear_input_buffer();
+                break;
+            }
+            case 2: {
+                if (list.size == 0) {
+                    printf("Linked list is Empty\n");
+                } else {
+                    for (int i = 0; i < list.size; i++) {
+                        printf("%d -> ", list.data[i]);
+                    }
+                    printf("NULL\n");
+                }
+                break;
+            }
+            case 3: {
+                if (list.size >= MAX_SIZE) {
+                    printf("List is full. Cannot insert new elements.\n");
+                    break;
+                }
+                printf("\n Enter a number to insert in the list: ");
+                if (scanf("%d", &num) != 1) {
+                    printf("Invalid input.\n");
+                    clear_input_buffer();
+                    break;
+                }
+                printf("\n Where do you want to insert the number? (1: Beginning, 2: End, 3: Specific Location): ");
+                if (scanf("%d", &location) != 1 || location < 1 || location > 3) {
+                    printf("Invalid location choice.\n");
+                    clear_input_buffer();
+                    break;
+                }
+                clear_input_buffer();
+
+                if (location == 1) { // Beginning
+                    for (int i = list.size; i > 0; i--) {
+                        list.data[i] = list.data[i - 1];
+                    }
+                    list.data[0] = num;
+                    list.size++;
+                } else if (location == 2) { // End
+                    list.data[list.size++] = num;
+                } else { // Specific Location
+                    int specific_location;
+                    printf("Enter the specific position (1 to %d): ", list.size + 1);
+                    if (scanf("%d", &specific_location) != 1 || specific_location < 1 || specific_location > list.size + 1) {
+                        printf("Invalid position.\n");
+                        clear_input_buffer();
+                        break;
+                    }
+                    for (int i = list.size; i >= specific_location; i--) {
+                        list.data[i] = list.data[i - 1];
+                    }
+                    list.data[specific_location - 1] = num;
+                    list.size++;
+                }
+                break;
+            }
+            case 4: {
+                if (list.size == 0) {
+                    printf("Linked list is empty. Nothing to delete.\n");
+                    break;
+                }
+                printf("\n Where do you want to delete a number from? (1: Beginning, 2: End, 3: Specific Location): ");
+                if (scanf("%d", &location) != 1 || location < 1 || location > 3) {
+                    printf("Invalid location choice.\n");
+                    clear_input_buffer();
+                    break;
+                }
+                clear_input_buffer();
+
+                if (location == 1) { // Beginning
+                    for (int i = 0; i < list.size - 1; i++) {
+                        list.data[i] = list.data[i + 1];
+                    }
+                    list.size--;
+                } else if (location == 2) { // End
+                    list.size--;
+                } else { // Specific Location
+                    int specific_location;
+                    printf("Enter the specific position to delete (1 to %d): ", list.size);
+                    if (scanf("%d", &specific_location) != 1 || specific_location < 1 || specific_location > list.size) {
+                        printf("Invalid position.\n");
+                        clear_input_buffer();
+                        break;
+                    }
+                    for (int i = specific_location - 1; i < list.size - 1; i++) {
+                        list.data[i] = list.data[i + 1];
+                    }
+                    list.size--;
+                }
+                break;
+            }
+            case 5:
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while(option != 5);
+
+    return 0;
+}
+
