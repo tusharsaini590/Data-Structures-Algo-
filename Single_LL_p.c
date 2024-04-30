@@ -1,5 +1,5 @@
-// c program to perform insertion and deletion in single linked list with  pointers
-
+// Program to perform insertion, deletion, create, display operations in single linked list 
+// using pointers
 
 
 #include <stdio.h>
@@ -13,20 +13,25 @@ struct node {
 
 int main() {
     struct node *start = NULL;
-    int option;
+    int option; // Changed from char to int
 
-    printf("Namaskaram!, The following code is for both insertion and deletion in case of a single linked list.\n");
-
-    // Main menu loop
     do {
-        printf("\n\n\t\t**********MAIN MENU**********");
-        printf("\n 1:) Create a Linked-List");
-        printf("\n 2:) Display the Linked-List");
-        printf("\n 3:) Insert a node in the LL");
-        printf("\n 4:) Delete a node in the LL");
-        printf("\n 5:) Exit the program");
-        printf("\n\n Enter your choice : ");
-        scanf("%d", &option);
+        printf("\n\n\t\t----------MAIN MENU----------"
+               "\n 1:) Create a Linked-List"
+               "\n 2:) Display the Linked-List"
+               "\n 3:) Insert a node in the LL"
+               "\n 4:) Delete a node in the LL"
+               "\n 5:) Exit the program"
+               "\n\n Enter your choice : ");
+        if (scanf("%d", &option) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            while(getchar() != '\n'); // clear the input buffer
+            continue;
+        }
+        if(option < 1 || option > 5) {
+            printf("Invalid choice. Please try again.\n");
+            continue;
+        }
 
         switch(option) {
             case 1: {
@@ -41,7 +46,7 @@ int main() {
                     newNode = (struct node *)malloc(sizeof(struct node));
 
                     if (newNode == NULL) {
-                        printf("Memory allocation failed. Linked list creation aborted.\n");
+                        printf("Memory allocation failed. \n");
                         break;
                     }
 
@@ -81,15 +86,24 @@ int main() {
             case 3: {
                 // Insert a node into the linked list
                 struct node *newNode, *ptr, *prev;
-                int num, val, choice;
+                int num, val;
+                int choice;
 
-                printf("\n Choose method of insertion:");
-                printf("\n 1:) Insert at the beginning");
-                printf("\n 2:) Insert at the end");
-                printf("\n 3:) Insert after a specific value");
-                printf("\n 4:) Insert before a specific value");
-                printf("\n\n Enter your choice: ");
-                scanf("%d", &choice);
+                printf("\n Choose method of insertion:"
+                       "\n 1:) Insert at the beginning"
+                       "\n 2:) Insert at the end"
+                       "\n 3:) Insert after a specific value"
+                       "\n 4:) Insert before a specific value"
+                       "\n\n Enter your choice: ");
+                if (scanf("%d", &choice) != 1) {
+                    printf("Invalid input. Please enter a number.\n");
+                    while (getchar() != '\n'); // clear the input buffer
+                    continue;
+                }
+                if(choice < 1 || choice > 4) {
+                    printf("Invalid choice. Please try again.\n");
+                    continue;
+                }
 
                 switch(choice) {
                     case 1:
@@ -184,27 +198,37 @@ int main() {
                             }
                         }
                         break;
+
                     default:
-                        printf("\nInvalid choice.\nBaawle 4 ke alawa or konsa case dikh gya tenne!!");
+                        printf("\nInvalid choice.");
                 }
                 break;
             }
             case 4: {
                 // Delete a node from the linked list
                 struct node *ptr = start, *prev = NULL;
-                int choice, pos;
+                int  pos;
+                int choice;
 
                 if (start == NULL) {
                     printf("\nList is empty. Nothing to delete.");
                     break;
                 }
 
-                printf("\n Choose method of deletion:");
-                printf("\n 1:) Delete at the beginning");
-                printf("\n 2:) Delete at the end");
-                printf("\n 3:) Delete at a specific position");
-                printf("\n\n Enter your choice: ");
-                scanf("%d", &choice);
+                printf("\n Choose method of deletion:"
+                       "\n 1:) Delete at the beginning"
+                       "\n 2:) Delete at the end"
+                       "\n 3:) Delete at a specific position"
+                       "\n\n Enter your choice: ");
+                if (scanf("%d", &choice) != 1) {
+                    printf("Invalid input. Please enter a number.\n");
+                    while (getchar() != '\n'); // clear the input buffer
+                    continue;
+                }
+                if(choice < 1 || choice > 3) {
+                    printf("Invalid choice. Please try again.\n");
+                    continue;
+                }
 
                 switch(choice) {
                     case 1:
@@ -258,6 +282,7 @@ int main() {
                             free(ptr);
                         }
                         break;
+
                     default:
                         printf("\nInvalid choice.");
                 }
@@ -267,7 +292,7 @@ int main() {
                 printf("\nExiting...");
                 break;
             default:
-                printf("\nTry again, Moye More event occurs for you,lol!");
+                printf("\nTry again!");
         }
     } while(option != 5);
 
