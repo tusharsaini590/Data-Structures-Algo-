@@ -1,1 +1,328 @@
-d
+// TAKE HELP FROM GOOGLE IN THIS PROGRAM
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the Node structure for the adjacency list
+typedef struct Node {
+    int vertex;
+    int visited; // Flag to track visited nodes
+    struct Node* next;
+} Node;
+
+// Define the Graph structure
+typedef struct Graph {
+    int numVertices;
+    Node** adjLists; // Array of pointers to adjacency lists
+} Graph;
+
+// Function prototypes
+Graph* createGraph(int vertices);
+void addEdge(Graph* graph, int src, int dest);
+void insertBeginning(Node** head, int vertex);
+void insertEnd(Node** head, int vertex);
+void insertAtPosition(Node** head, int vertex, int position);
+void deleteBeginning(Node** head);
+void deleteEnd(Node** head);
+void deleteAtPosition(Node** head, int position);
+void displayGraph(Graph* graph);
+void BFS(Graph* graph, int startVertex);
+void DFS(Graph* graph, int startVertex);
+
+int main() {
+    int choice, vertices, vertex, position, startVertex;
+    Graph* graph = NULL;
+
+    // Main menu for user interaction
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Create Graph\n");
+        printf("2. Add Edge\n");
+        printf("3. Insert Beginning\n");
+        printf("4. Insert End\n");
+        printf("5. Insert At Position\n");
+        printf("6. Delete Beginning\n");
+        printf("7. Delete End\n");
+        printf("8. Delete At Position\n");
+        printf("9. Display Graph\n");
+        printf("10. BFS\n");
+        printf("11. DFS\n");
+        printf("12. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter number of vertices: ");
+                scanf("%d", &vertices);
+                graph = createGraph(vertices);
+                break;
+            case 2:
+                printf("Enter source and destination vertices: ");
+                scanf("%d %d", &vertex, &position);
+                addEdge(graph, vertex, position);
+                break;
+            case 3:
+                printf("Enter vertex: ");
+                scanf("%d", &vertex);
+                insertBeginning(&(graph->adjLists[vertex]), vertex);
+                break;
+            case 4:
+                printf("Enter vertex: ");
+                scanf("%d", &vertex);
+                insertEnd(&(graph->adjLists[vertex]), vertex);
+                break;
+            case 5:
+                printf("Enter vertex and position: ");
+                scanf("%d %d", &vertex, &position);
+                insertAtPosition(&(graph->adjLists[vertex]), vertex, position);
+                break;
+            case 6:
+                deleteBeginning(&(graph->adjLists[vertex]));
+                break;
+            case 7:
+                deleteEnd(&(graph->adjLists[vertex]));
+                break;
+            case 8:
+                printf("Enter position: ");
+                scanf("%d", &position);
+                deleteAtPosition(&(graph->adjLists[vertex]), position);
+                break;
+            case 9:
+                displayGraph(graph);
+                break;
+            case 10:
+                printf("Enter start vertex for BFS: ");
+                scanf("%d", &startVertex);
+                BFS(graph, startVertex);
+                break;
+            case 11:
+                printf("Enter start vertex for DFS: ");
+                scanf("%d", &startVertex);
+                DFS(graph, startVertex);
+                break;
+            case 12:
+                exit(0);
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
+
+// Function to create a new graph with given number of vertices
+Graph* createGraph(int vertices) {
+    Graph* graph = (Graph*)malloc(sizeof(Graph));
+    graph->numVertices = vertices;
+    graph->adjLists = (Node**)malloc(vertices * sizeof(Node*));
+
+    // Initialize each adjacency list as empty
+    for (int i = 0; i < vertices; i++) {
+        graph->adjLists[i] = NULL;
+    }
+
+    return graph;
+}
+
+// Function to add an edge between two vertices
+void addEdge(Graph* graph, int src, int dest) {
+    // Add edge from src to dest
+    insertEnd(&(graph->adjLists[src]), dest);
+    // For undirected graph, add edge from dest to src as well
+    insertEnd(&(graph->adjLists[dest]), src);
+}
+
+// Function to insert a node at the beginning of a linked list
+void insertBeginning(Node** head, int vertex) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = vertex;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+// Function to insert a node at the end of a linked list
+void insertEnd(Node** head, int vertex) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = vertex;
+    newNode->next = NULL;
+    if (*head == NULL) {
+        *head = newNode;
+    } else {
+        Node* temp = *head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+}
+
+// Function to insert a node at a specified position in a linked list
+void insertAtPosition(Node** head, int vertex, int position) {
+    if (position <= 0) {
+        insertBeginning(head, vertex);
+        return;
+    }
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->vertex = vertex;
+    newNode->next = NULL;
+    Node* temp = *head;
+    for (int i = 0; i < position - 1; i++) {
+        if (temp == NULL) {
+            printf("Position out of range.\n");
+            free(newNode);
+            return;
+        }
+        temp = temp->next;
+    }
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+// Function to delete the first node of a linked list
+void deleteBeginning(Node** head) {
+    if (*head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    Node* temp = *head;
+    *head = (*head)->next;
+    free(temp);
+}
+
+// Function to delete the last node of a linked list
+void deleteEnd(Node** head) {
+    if (*head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    Node* temp = *head;
+    Node* prev = NULL;
+    while (temp->next != NULL) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (prev != NULL) {
+        prev->next = NULL;
+    } else {
+        *head = NULL;
+    }
+    free(temp);
+}
+
+// Function to delete a node at a specified position in a linked list
+void deleteAtPosition(Node** head, int position) {
+    if (*head == NULL || position <= 0) {
+        printf("List is empty or position out of range.\n");
+        return;
+    }
+    Node* temp = *head;
+    Node* prev = NULL;
+    for (int i = 0; i < position - 1; i++) {
+        if (temp == NULL) {
+            printf("Position out of range.\n");
+            return;
+        }
+        prev = temp;
+
+
+        temp = temp->next;
+    }
+    if (temp == NULL) {
+        printf("Position out of range.\n");
+        return;
+    }
+    if (prev != NULL) {
+        prev->next = temp->next;
+    } else {
+        *head = temp->next;
+    }
+    free(temp);
+}
+
+// Function to display the adjacency list representation of the graph
+void displayGraph(Graph* graph) {
+    for (int i = 0; i < graph->numVertices; i++) {
+        Node* temp = graph->adjLists[i];
+        printf("Adjacency list of vertex %d:\n", i);
+        while (temp != NULL) {
+            printf("%d -> ", temp->vertex);
+            temp = temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+
+// Function to perform Breadth First Search (BFS) traversal of the graph
+void BFS(Graph* graph, int startVertex) {
+    if (graph == NULL) {
+        printf("Graph is empty.\n");
+        return;
+    }
+
+    // Create a queue for BFS
+    Node* queue[graph->numVertices]; // Assuming a maximum of numVertices
+    int front = -1, rear = -1;
+
+    // Mark the starting vertex as visited and enqueue it
+    graph->adjLists[startVertex]->visited = 1;
+    queue[++rear] = graph->adjLists[startVertex];
+
+    while (front != rear) {
+        // Dequeue a vertex from the queue and print it
+        Node* current = queue[++front];
+        printf("%d ", current->vertex);
+
+        // Visit and enqueue all adjacent vertices of the dequeued vertex
+        Node* temp = current->next;
+        while (temp != NULL) {
+            if (!graph->adjLists[temp->vertex]->visited) {
+                // Mark the vertex as visited and enqueue it
+                graph->adjLists[temp->vertex]->visited = 1;
+                queue[++rear] = graph->adjLists[temp->vertex];
+            }
+            temp = temp->next;
+        }
+    }
+
+    // Reset visited flags after traversal
+    for (int i = 0; i < graph->numVertices; i++) {
+        graph->adjLists[i]->visited = 0;
+    }
+}
+
+// Utility function for Depth First Search (DFS) traversal
+void DFSUtil(Graph* graph, int vertex) {
+    // Mark the current node as visited and print it
+    graph->adjLists[vertex]->visited = 1;
+    printf("%d ", vertex);
+
+    // Recursively visit all adjacent vertices that are not yet visited
+    Node* temp = graph->adjLists[vertex]->next;
+    while (temp != NULL) {
+        if (!graph->adjLists[temp->vertex]->visited) {
+            DFSUtil(graph, temp->vertex);
+        }
+        temp = temp->next;
+    }
+}
+
+// Function to perform Depth First Search (DFS) traversal of the graph
+void DFS(Graph* graph, int startVertex) {
+    if (graph == NULL) {
+        printf("Graph is empty.\n");
+        return;
+    }
+
+    printf("Depth First Traversal (DFS) from vertex %d: ", startVertex);
+    DFSUtil(graph, startVertex);
+    printf("\n");
+
+    // Reset visited flags after traversal
+    for (int i = 0; i < graph->numVertices; i++) {
+        graph->adjLists[i]->visited = 0;
+    }
+}
+
