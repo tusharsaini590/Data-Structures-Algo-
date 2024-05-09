@@ -1,0 +1,86 @@
+Start:
+
+1. Include the necessary header files `stdio.h` and `stdlib.h`.
+
+2. Define the structure `Node` to represent a node in the adjacency list:
+   - Define `Node` structure with members:
+     - `vertex`: An integer representing the vertex number.
+     - `visited`: An integer flag to track visited nodes (0 for not visited, 1 for visited).
+     - `next`: A pointer to the next node in the adjacency list.
+
+3. Define the structure `Graph` to represent the graph:
+   - Define `Graph` structure with members:
+     - `numVertices`: An integer representing the number of vertices in the graph.
+     - `adjLists`: An array of pointers to adjacency lists.
+
+4. Declare function prototypes for various operations on the graph:
+   - `createGraph`: Create a new graph with the given number of vertices.
+   - `addEdge`: Add an edge between two vertices in the graph.
+   - Linked list operations:
+     - `insertBeginning`: Insert a node at the beginning of a linked list.
+     - `insertEnd`: Insert a node at the end of a linked list.
+     - `insertAtPosition`: Insert a node at a specified position in a linked list.
+     - `deleteBeginning`: Delete the first node of a linked list.
+     - `deleteEnd`: Delete the last node of a linked list.
+     - `deleteAtPosition`: Delete a node at a specified position in a linked list.
+   - `displayGraph`: Display the graph in adjacency list form.
+   - Graph traversal algorithms:
+     - `BFS`: Perform Breadth First Search (BFS) traversal of the graph.
+     - `DFS`: Perform Depth First Search (DFS) traversal of the graph.
+
+5. Define the `main` function:
+   - Declare variables for user input and create a pointer `graph` of type `Graph`.
+   - Start an infinite loop to display a menu and execute user-selected operations until the user chooses to exit.
+
+6. Inside the loop:
+   - Display the menu options.
+   - Prompt the user for choice and perform operations accordingly using a switch case:
+     - Case 1: Create a graph with the given number of vertices.
+     - Case 2: Add an edge between source and destination vertices.
+     - Case 3: Insert a vertex at the beginning of the adjacency list.
+     - Case 4: Insert a vertex at the end of the adjacency list.
+     - Case 5: Insert a vertex at a specified position in the adjacency list.
+     - Case 6: Delete the first vertex from the adjacency list.
+     - Case 7: Delete the last vertex from the adjacency list.
+     - Case 8: Delete a vertex at a specified position from the adjacency list.
+     - Case 9: Display the graph in adjacency list form.
+     - Case 10: Perform Breadth First Search (BFS) traversal from a given start vertex.
+     - Case 11: Perform Depth First Search (DFS) traversal from a given start vertex.
+     - Case 12: Exit the program.
+
+7. Define the `createGraph` function:
+   - Allocate memory for the `Graph` structure.
+   - Initialize `numVertices` with the given number of vertices.
+   - Allocate memory for `adjLists` array to store adjacency lists for each vertex.
+   - Initialize each adjacency list as empty.
+
+8. Define the `addEdge` function:
+   - Insert the destination vertex into the adjacency list of the source vertex.
+   - For an undirected graph, also insert the source vertex into the adjacency list of the destination vertex.
+
+9. Define various linked list operations:
+   - `insertBeginning`: Insert a node at the beginning of a linked list.
+   - `insertEnd`: Insert a node at the end of a linked list.
+   - `insertAtPosition`: Insert a node at a specified position in a linked list.
+   - `deleteBeginning`: Delete the first node of a linked list.
+   - `deleteEnd`: Delete the last node of a linked list.
+   - `deleteAtPosition`: Delete a node at a specified position in a linked list.
+
+10. Define the `displayGraph` function:
+    - Iterate through each vertex in the graph.
+    - Display the adjacency list of each vertex, showing the connected vertices.
+
+11. Define the `BFS` function:
+    - Create a queue for BFS traversal.
+    - Mark the start vertex as visited and enqueue it.
+    - Process each vertex in the queue:
+      - Dequeue a vertex, print it, and enqueue its unvisited neighbors.
+    - Reset visited flags after traversal.
+
+12. Define the `DFS` function:
+    - Recursively visit each vertex starting from the given start vertex.
+    - Mark each visited vertex and print it.
+    - Visit each unvisited neighbor of the current vertex recursively.
+    - Reset visited flags after traversal.
+
+End.
