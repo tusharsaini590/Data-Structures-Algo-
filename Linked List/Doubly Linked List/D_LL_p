@@ -4,12 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Define the structure for a node. It is a self-referential structure
 struct node {
     int data;
     struct node *prev;
     struct node *next;
 };
 
+// Function to clear the input buffer
 void clear_input_buffer() {
     while (getchar() != '\n');
 }
@@ -29,7 +31,7 @@ int main() {
                "\n 4:) Delete a node in the DLL"
                "\n 5:) Exit the program"
                "\n\n Enter your choice : ");
-     
+
         if (scanf("%d", &option) != 1) {
             printf("Invalid input. Please enter a number.\n");
             clear_input_buffer(); // clear the input buffer
@@ -42,6 +44,7 @@ int main() {
 
         switch(option) {
             case 1: {
+                // Create a doubly linked list
                 struct node *newNode, *ptr;
                 int num;
 
@@ -73,6 +76,7 @@ int main() {
                 break;
             }
             case 2: {
+                // Display the doubly linked list
                 struct node *ptr = start;
                 if (start == NULL) {
                     printf("\nList is empty.");
@@ -87,6 +91,7 @@ int main() {
                 break;
             }
             case 3: {
+                // Insert a node into the doubly linked list
                 struct node *newNode, *ptr;
                 int num, val, choice;
 
@@ -236,6 +241,7 @@ int main() {
                 break;
             }
             case 4: {
+                // Delete a node from the doubly linked list
                 struct node *ptr;
                 int choice, val;
 
